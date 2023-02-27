@@ -25,11 +25,9 @@ public class CameraManager : MonoBehaviour {
 	float smoothYvelocity;
 	public float lookAngle; //Angle the camera has on the Y axis
 	public float tiltAngle; //Angle the camera has up / down
-	public Camera estCamera;
-
+	
 	public void Init()
 	{
-		estCamera.gameObject.SetActive(true);
 		camTrans = Camera.main.transform;
 		pivot = camTrans.parent;
 	
