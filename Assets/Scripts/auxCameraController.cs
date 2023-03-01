@@ -20,7 +20,10 @@ public class auxCameraController : MonoBehaviour
     {
         if (Input.anyKey)
         {
-            mainCam.SetActive(true);   
+            mainCam.SetActive(true);
+            GetComponent<Camera>().enabled = false;
+            // gameObject.SetActive(false);
+
         }
      
     
