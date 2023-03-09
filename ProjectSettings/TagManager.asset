@@ -7,6 +7,7 @@ TagManager:
   - Wall
   - Launch
   - FinishLine
+  - KillZone
   layers:
   - Default
   - TransparentFX

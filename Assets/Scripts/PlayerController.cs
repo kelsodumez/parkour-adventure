@@ -30,6 +30,13 @@ public class PlayerController : MonoBehaviour
     private bool canJump = true;
     public float jumpForce;
     public GameObject winText;
+    public GameObject loseText;
+    public GameObject respawnPoint;
+    public bool stopPaused = false;
+    public bool stopReset = false;
+    private AudioSource audioSource;
+    public AudioClip winSFX;
+    public AudioClip loseSFX;
 
     Rigidbody rb;   
     void Start()
@@ -40,6 +47,8 @@ public class PlayerController : MonoBehaviour
             Cursor.visible = false;
         }   
     rb = GetComponent<Rigidbody>();
+    	
+    audioSource = gameObject.GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -68,7 +77,24 @@ public class PlayerController : MonoBehaviour
         if (other.gameObject.tag == "FinishLine")
         {
             winText.gameObject.SetActive(true);
+            audioSource.PlayOneShot(winSFX);
+            stopPaused = true;
         }
+        if (other.gameObject.tag == "KillZone")
+        {
+            loseText.SetActive(true);
+            StartCoroutine(WaitThenRespawn());
+        }
+    }
+
+    IEnumerator WaitThenRespawn()
+    {
+        yield return new WaitForSeconds(3);
+        loseText.SetActive(false);
+        audioSource.PlayOneShot(loseSFX);
+        gameObject.transform.position = respawnPoint.transform.position;
+        stopReset = true;
+        // stopReset = false;
     }
     void CheckGrounded()
     {
