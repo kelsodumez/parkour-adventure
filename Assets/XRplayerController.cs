@@ -16,6 +16,7 @@ public class XRplayerController : MonoBehaviour
     public GameObject respawnPoint;
     public bool stopPaused = false;
     public bool stopReset = false;
+    private float trophyCount = 0;
     // Start is called before the first frame update
     void Start()
     {
@@ -41,15 +42,29 @@ public class XRplayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "FinishLine")
         {
-            winText.gameObject.SetActive(true);
-            audioSource.PlayOneShot(winSFX);
-            stopPaused = true;
+            if (trophyCount < 3){
+                loseText.SetActive(true);
+                StartCoroutine(WaitThenRespawn());
+            }
+            else{
+                winText.gameObject.SetActive(true);
+                audioSource.PlayOneShot(winSFX);
+                stopPaused = true;    
+            }
         }
         if (other.gameObject.tag == "KillZone")
         {
-            loseText.SetActive(true);
+
             StartCoroutine(WaitThenRespawn());
         }
+    }
+
+    public void trophyPlaced(){
+        trophyCount += 1;
+    }
+
+    public void trophyRemoved(){
+        trophyCount -= 1;
     }
 
     IEnumerator WaitThenRespawn()

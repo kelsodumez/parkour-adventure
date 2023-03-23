@@ -17,7 +17,6 @@ public class scene : MonoBehaviour
     {
         timer += Time.deltaTime;
         lerpedColor = Color.Lerp(Color.magenta, Color.green, Mathf.PingPong(Time.time* timer * .02f, 1) );
-        Debug.Log(lerpedColor);
         RenderSettings.ambientLight = lerpedColor;
     }
 }
